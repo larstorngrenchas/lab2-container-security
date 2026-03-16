@@ -17,7 +17,8 @@ SBOM talar om vilka komponenter som finns i den app som finns i en container. Vi
 # Hur förändrar policy-enforcement (Gatekeeper) hur man jobbar med Kubernetes?
 Man tvingar utvecklare att vara noggranna, och kontrollera sin kod innan man kör deployment, eftersom det annars blir så att en pod nekas vid skapandet. Det gör även att säkerhetsarbetet blir mer automatiserat och policydrivet. All mjukvara som skapas måste gå igenom policykontrollen för att bli godkänd.
 
+# Skärmdumpar
 ![Trivy scanning before hardening](screenshots/trivy-before.jpg)
-![Trivy scanning efter hardening](gatekeeper-pass.jpg)
+![Trivy scanning efter hardening](screenshots/gatekeeper-pass.jpg)
 ![Gatekeeper deny](screenshots/gatekeeper-deny.jpg)
 ![Gatekeeper pass](screenshots/gatekeeper-pass.jpg)
