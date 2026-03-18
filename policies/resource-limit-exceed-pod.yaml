@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resource-limit-exceed-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        limits:
+          cpu: "700m" # Överskrider det tillåtna CPU-gränsen
+          memory: "4Gi" # Överskrider det tillåtna minnesgränsen
