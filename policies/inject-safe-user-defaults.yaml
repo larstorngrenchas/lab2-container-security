@@ -1,0 +1,14 @@
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: inject-safe-user-defaults
+spec:
+  applyTo:
+    - groups: [""]
+      kinds: ["Pod"]
+      versions: ["v1"]
+  location: "spec.securityContext.runAsUser"
+  parameters:
+    assign:
+      value: 1000 # Gives all users UID 1000 automaticly if they don't specify one, which is a common non-root user ID in many base images.
+

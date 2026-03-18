@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sMaxResourceLimits
+metadata:
+  name: limit-cpu-and-memory
+spec:
+  enforcementAction: warn # The pod is allowed to start but logs a warning
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    cpu: "500m" # Max 0.5 cores
+    memory: "1Gi" # Max 1 Gigabyte
+

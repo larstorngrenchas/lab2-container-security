@@ -1,0 +1,17 @@
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: force-user-id-1000
+spec:
+  applyTo:
+  - groups: [""]
+    kinds: ["Pod"]
+    versions: ["v1"]
+  match:
+    scope: Namespaced
+    excludedNamespaces: ["kube-system"]
+  location: "spec.securityContext.runAsUser"
+  parameters:
+    assign:
+      value: 1000
+
