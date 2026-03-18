@@ -25,3 +25,6 @@ Man tvingar utvecklare att vara noggranna, och kontrollera sin kod innan man kö
 
 ## Cosigned docker hardened image
 ![Cosigning hardened docker image](screenshots/cosigned_docker_image_dockerhub.jpg)
+
+## Tests av policies genomförda med gator
+![Tests of policies with gator](screenshots/dump_gator_tests.png)
