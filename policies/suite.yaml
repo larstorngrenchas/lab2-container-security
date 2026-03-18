@@ -1,0 +1,53 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+metadata:
+  name: non-root-test
+tests:
+  - name: block-root-user
+    template: block-root-user-template.yaml
+    constraint: no-root-allowed-team.yaml
+    cases:
+      - name: should-deny-root
+        object: block-root-pod.yaml
+        assertions:
+      #    - violation: "Det är strängt förbjudet att köra som root (UID 0)!"
+      #- name: should-allow-safe-user
+      #  object: good-pod.yaml
+      #  assertions:
+      #    - count: 0 # Vi förväntar oss 0 fel här
+  - name: check-max-resource-limits
+    template: max-resource-limits-template.yaml
+    constraint: max-resource-limits-team.yaml
+    cases:
+      - name: should-deny-over-limit
+        object: resource-limits-exceed-pod.yaml
+        assertions:
+      #    - violation: "Det är strängt förbjudet att köra som root (UID 0)!"
+      #- name: should-allow-safe-user
+      #  object: good-pod.yaml
+      #  assertions:
+      #    - count: 0 # Vi förväntar oss 0 fel här
+  - name: require-non-root-user
+    template: require-non-root-template.yaml
+    constraint: require-non-root-team.yaml
+    cases:
+      - name: should-stop-root
+        object: enforce-non-root-pod.yaml
+        assertions:
+      #    - violation: "Det är strängt förbjudet att köra som root (UID 0)!"
+      #- name: should-allow-safe-user
+      #  object: good-pod.yaml
+      #  assertions:
+      #    - count: 0 # Vi förväntar oss 0 fel här
+  - name: check-labels
+    template: require-labels-template.yaml
+    constraint: require-label.yaml
+    cases:
+      - name: should-deny-no-labels
+        object: prevent-no-label-pod.yaml
+        assertions:
+      #    - violation: "Det är strängt förbjudet att köra som root (UID 0)!"
+      #- name: should-allow-safe-user
+      #  object: good-pod.yaml
+      #  assertions:
+      #    - count: 0 # Vi förväntar oss 0 fel här

@@ -7,8 +7,6 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces:
-      - fridhemfighters
   parameters:
     labels:
       - "team"
