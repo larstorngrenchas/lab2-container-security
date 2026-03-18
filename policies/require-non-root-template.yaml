@@ -1,0 +1,38 @@
+#apiVersion: templates.gatekeeper.sh/v1
+#kind: ConstraintTemplate
+#metadata:
+#  name: k8srequirenonrootuser
+#spec:
+#  crd:
+#    spec:
+#      names:
+#        kind: K8sRequireNonRootUser
+#      validation:
+#        openAPIV3Schema:
+#          type: object
+#          properties:
+#            minUserId:
+#              type: integer
+#  targets:
+#    - target: admission.k8s.gatekeeper.sh
+#      rego: |
+#        package k8srequirenonrootuser
+#
+#        # 1. Check runAsNonRoot on Pod level
+#        violation[{"msg": msg}] {
+#          not input.review.object.spec.securityContext.runAsNonRoot == true
+#          msg := "Podden måste ha 'spec.securityContext.runAsNonRoot: true'."
+#        }
+#
+#        # 2. Check runAsUser on Pod level (must be >= minUserId)
+#        violation[{"msg": msg}] {
+#          user_id := input.review.object.spec.securityContext.runAsUser
+#          user_id < input.parameters.minUserId
+#          msg := sprintf("User ID <%v> är för lågt. Måste vara minst %v.", [user_id, input.parameters.minUserId])
+#        }
+#
+#        # 3. Check if runAsUser is missing entirely
+#        violation[{"msg": msg}] {
+#          not input.review.object.spec.securityContext.runAsUser
+#          msg := "Du måste ange ett specifikt 'runAsUser' (t.ex. 1000)."
+#        }

@@ -1,0 +1,44 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8smaxresourcelimits
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sMaxResourceLimits
+      validation:
+        # Define which parameters the template can take
+        openAPIV3Schema:
+          type: object
+          properties:
+            cpu:
+              type: string
+            memory:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8smaxresourcelimits
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          
+          # 1. Check if limits is missing completely
+          not container.resources.limits
+          msg := sprintf("Containern <%v> saknar 'limits'.", [container.name])
+        }
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          cpu_limit := container.resources.limits.cpu
+          
+          # 2. Compare CPU limit against the parameter (using built-in K8s conversion)
+          canon_limit := canonify_cpu(cpu_limit)
+          max_limit := canonify_cpu(input.parameters.cpu)
+          canon_limit > max_limit
+          msg := sprintf("CPU-limit <%v> för <%v> är högre än tillåtet max <%v>.", [cpu_limit, container.name, input.parameters.cpu])
+        }
+
+        # Help function for understanding K8s CPU units (e.g., 500m vs 0.5)
+        canonify_cpu(v) = round(units.parse_bytes(v) / 1000000) # A simplification for CPU

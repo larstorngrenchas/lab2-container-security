@@ -1,0 +1,12 @@
+#apiVersion: constraints.gatekeeper.sh/v1beta1
+#kind: K8sRequireResourceLimits
+#metadata:
+#  name: enforce-resource-limits
+#spec:
+#  match:
+#    kinds:
+#      - apiGroups: [""]
+#        kinds: ["Pod"]
+#    excludedNamespaces:
+#      - kube-system # Exclude system namespaces to avoid problems
+

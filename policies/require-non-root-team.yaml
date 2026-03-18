@@ -1,0 +1,13 @@
+#apiVersion: constraints.gatekeeper.sh/v1beta1
+#kind: K8sRequireNonRootUser
+#metadata:
+#  name: enforce-min-user-id
+#spec:
+#  match:
+#    kinds:
+#      - apiGroups: [""]
+#        kinds: ["Pod"]
+#    excludedNamespaces: ["kube-system"]
+#  parameters:
+#    minUserId: 1000
+
