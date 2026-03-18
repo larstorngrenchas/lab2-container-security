@@ -24,4 +24,4 @@ Man tvingar utvecklare att vara noggranna, och kontrollera sin kod innan man kö
 ![Gatekeeper pass](screenshots/gatekeeper-pass.jpg)
 
 ## Cosigned docker hardened image
-![Cosigning hardened docker image](screenshots/cosigned_docker_image_dockerhub.png)
+![Cosigning hardened docker image](screenshots/cosigned_docker_image_dockerhub.jpg)
